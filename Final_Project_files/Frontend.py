@@ -176,41 +176,15 @@ elif bg_option == "Custom Background":
 # preset_files = [f for f in os.listdir(preset_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
 
 
-# # Find Preset Backgrounds
-# preset_dir = "Preset_Backgrounds"
-# preset_files = []
-# if os.path.exists(preset_dir):
-#     preset_files = [f for f in os.listdir(preset_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
-# else:
-#     st.error(f"Error: The '{preset_dir}' directory was not found. Please ensure it's in your repository.")
-
-
-
-# if bg_option == "Preset Backgrounds":
-#     st.sidebar.write("Select a preset background by clicking a thumbnail:")
-#     if preset_files:
-#         cols = st.sidebar.columns(3)
-#         for idx, file_name in enumerate(preset_files):
-#             img_path = os.path.join(preset_dir, file_name)
-#             try:
-#                 thumb = Image.open(img_path).convert("RGBA").resize((80, 80))
-#             except:
-#                 continue
-#             col = cols[idx % 3]
-#             if col.button("", key=f"preset_btn_{idx}"):
-#                 st.session_state["selected_preset"] = img_path
-#             col.image(thumb, use_column_width=True)
-
-# if st.session_state["selected_preset"]:
-#     preset_bg_file = st.session_state["selected_preset"]
-
-
+# Find Preset Backgrounds
 preset_dir = "Preset_Backgrounds"
 preset_files = []
 if os.path.exists(preset_dir):
     preset_files = [f for f in os.listdir(preset_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
 else:
     st.error(f"Error: The '{preset_dir}' directory was not found. Please ensure it's in your repository.")
+
+
 
 if bg_option == "Preset Backgrounds":
     st.sidebar.write("Select a preset background by clicking a thumbnail:")
@@ -231,69 +205,33 @@ if st.session_state["selected_preset"]:
     preset_bg_file = st.session_state["selected_preset"]
 
 
-
 # ---------------- Google Drive Model Download (Option-A) ----------------
-# MODEL_DIR = "model_files"
-# MODEL_PATH = os.path.join(MODEL_DIR, "best_model (5).pth")
-
-# def download_model(file_id: str, dest: str):
-#     os.makedirs(os.path.dirname(dest), exist_ok=True)
-#     if not os.path.exists(dest):
-#         with st.spinner("Downloading model from Google Drive..."):
-#             url = f"https://drive.google.com/uc?id={file_id}"
-#             gdown.download(url, dest, quiet=False)
-#     else:
-#         st.info("Model already downloaded.")
-
-# # Get Drive file ID from Streamlit secrets
-# # file_id = st.secrets.get("DRIVE_FILE_ID")
-# # if not file_id:
-# #     st.error("Missing DRIVE_FILE_ID in Streamlit secrets.")
-# #     st.stop()
-
-# file_id = st.secrets.get("DRIVE_FILE_ID", "1BW7ZpdGILFiDjnvEb0V1S4q7ZBYcwiI8")  # optional fallback
-
-# if file_id == "1BW7ZpdGILFiDjnvEb0V1S4q7ZBYcwiI8":
-#     st.warning("⚠️ Using default file ID (local test mode). Add DRIVE_FILE_ID in Streamlit secrets for cloud use.")
-
-
-# download_model(file_id, MODEL_PATH)
-
-
-
-DOWNLOADS = [
-    {"folder_name": "model_files", "file_id": st.secrets.get("DRIVE_MODEL_ID", "1BW7ZpdGILFiDjnvEb0V1S4q7ZBYcwiI8"), "is_file": True, "filename": "best_model (5).pth"},
-    {"folder_name": "Demo-Image", "file_id": st.secrets.get("DRIVE_DEMO_ID", "1Ibc5YYMM3byWIiKbI3mACzpYbskmgs_L"), "is_file": False},
-    {"folder_name": "Preset_Backgrounds", "file_id": st.secrets.get("DRIVE_PRESET_ID", "128tYF4FPqkaHx_4Y2NiPiefDKZF_QIt8"), "is_file": False},
-    {"folder_name": "Ads", "file_id": st.secrets.get("DRIVE_ADS_ID", "1qCxGNto7K-JTbyCrRXRp9MlB-0CcuyVn"), "is_file": False}
-]
-
-def download_from_drive(item):
-    os.makedirs(item["folder_name"], exist_ok=True)
-    if item["is_file"]:
-        dest = os.path.join(item["folder_name"], item["filename"])
-        if not os.path.exists(dest):
-            with st.spinner(f"Downloading {item['filename']}..."):
-                url = f"https://drive.google.com/uc?id={item['file_id']}"
-                gdown.download(url, dest, quiet=False)
-        else:
-            st.info(f"{item['filename']} already exists.")
-    else:
-        zip_path = os.path.join(item["folder_name"] + ".zip")
-        if not os.path.exists(zip_path):
-            with st.spinner(f"Downloading folder '{item['folder_name']}' from Google Drive..."):
-                url = f"https://drive.google.com/uc?id={item['file_id']}"
-                gdown.download(url, zip_path, quiet=False)
-        if os.path.exists(zip_path):
-            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-                zip_ref.extractall(item["folder_name"])
-            os.remove(zip_path)
-
-for dl in DOWNLOADS:
-    download_from_drive(dl)
-
 MODEL_DIR = "model_files"
 MODEL_PATH = os.path.join(MODEL_DIR, "best_model (5).pth")
+
+def download_model(file_id: str, dest: str):
+    os.makedirs(os.path.dirname(dest), exist_ok=True)
+    if not os.path.exists(dest):
+        with st.spinner("Downloading model from Google Drive..."):
+            url = f"https://drive.google.com/uc?id={file_id}"
+            gdown.download(url, dest, quiet=False)
+    else:
+        st.info("Model already downloaded.")
+
+# Get Drive file ID from Streamlit secrets
+# file_id = st.secrets.get("DRIVE_FILE_ID")
+# if not file_id:
+#     st.error("Missing DRIVE_FILE_ID in Streamlit secrets.")
+#     st.stop()
+
+file_id = st.secrets.get("DRIVE_FILE_ID", "1BW7ZpdGILFiDjnvEb0V1S4q7ZBYcwiI8")  # optional fallback
+
+if file_id == "1BW7ZpdGILFiDjnvEb0V1S4q7ZBYcwiI8":
+    st.warning("⚠️ Using default file ID (local test mode). Add DRIVE_FILE_ID in Streamlit secrets for cloud use.")
+
+
+download_model(file_id, MODEL_PATH)
+
 
 
 # ---------------- Load Custom Model ----------------
@@ -414,7 +352,7 @@ else:
     uploaded_any = uploaded_files is not None and len(uploaded_files) > 0
 
 # ---------------- Demo Image Section ----------------
-demo_dir = "Demo-Image"
+demo_dir = "../Demo-Image"
 # demo_files = [f for f in os.listdir(demo_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))] if os.path.exists(demo_dir) else []
 demo_files = [f for f in os.listdir(demo_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
 
