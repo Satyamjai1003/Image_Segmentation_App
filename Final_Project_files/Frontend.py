@@ -38,7 +38,7 @@ st.markdown("""
 
         /* Main Page Background */
         .css-18e3th9 {  /* Streamlit main content container */
-            background-color: #121212;  /* Change this to your preferred color */
+            background-color: #000000;  /* Change this to your preferred color */
             color: #FCF9EA;
         }
 
