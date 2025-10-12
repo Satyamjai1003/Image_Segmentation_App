@@ -2,8 +2,8 @@
 streamlit==1.50.0
 
 # PyTorch for model inference
-torch==2.2.0
-torchvision==0.17.1
+torch==2.8.0
+torchvision==0.18.0
 
 # Image processing
 Pillow>=10.1,<12
