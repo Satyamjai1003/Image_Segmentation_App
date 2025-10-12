@@ -1,19 +1,30 @@
-numpy==2.2.6
-Pillow==9.5.0
-opencv-python-headless==4.12.0.88
-torch==2.8.0
-torchvision==0.23.0
+# Core app
 streamlit==1.50.0
 streamlit-autorefresh==1.0.1
 streamlit-image-comparison==0.0.4
+
+# PyTorch for model
+torch==2.8.0
+torchvision==0.23.0
+
+# Image processing
+opencv-python-headless==4.12.0.88
+Pillow==9.5.0
 albumentations==2.0.8
 albucore==0.0.24
 scikit-image==0.25.2
 imageio==2.37.0
+
+# Data handling & visualization
+numpy==2.2.6
 pandas==2.3.3
 matplotlib==3.10.6
 scipy==1.16.2
+
+# Networking / API calls
 requests==2.32.5
+
+# For pretty logging
 rich==14.2.0
 markdown-it-py==4.0.0
 mdurl==0.1.2
