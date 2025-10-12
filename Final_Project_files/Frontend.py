@@ -17,7 +17,7 @@ st.markdown("""
     <style>
         /* Main app background */
         .stApp {
-            background-color: linear-gradient(135deg, #B4E50D, #76B900);  
+            background: linear-gradient(135deg, #B4E50D, #76B900);  
             color: #FFFFFF;             
         }
         /* Optional: card-style containers for better contrast */
@@ -196,7 +196,7 @@ if st.session_state["selected_preset"]:
 
 # ---------------- Google Drive Model Download (Option-A) ----------------
 MODEL_DIR = "model_files"
-MODEL_PATH = os.path.join(MODEL_DIR, "best_model.pth")
+MODEL_PATH = os.path.join(MODEL_DIR, "best_model (5).pth")
 
 def download_model(file_id: str, dest: str):
     os.makedirs(os.path.dirname(dest), exist_ok=True)
@@ -208,10 +208,16 @@ def download_model(file_id: str, dest: str):
         st.info("Model already downloaded.")
 
 # Get Drive file ID from Streamlit secrets
-file_id = st.secrets.get("DRIVE_FILE_ID")
-if not file_id:
-    st.error("Missing DRIVE_FILE_ID in Streamlit secrets.")
-    st.stop()
+# file_id = st.secrets.get("DRIVE_FILE_ID")
+# if not file_id:
+#     st.error("Missing DRIVE_FILE_ID in Streamlit secrets.")
+#     st.stop()
+
+file_id = st.secrets.get("DRIVE_FILE_ID", "1BW7ZpdGILFiDjnvEb0V1S4q7ZBYcwiI8")  # optional fallback
+
+if file_id == "1BW7ZpdGILFiDjnvEb0V1S4q7ZBYcwiI8":
+    st.warning("⚠️ Using default file ID (local test mode). Add DRIVE_FILE_ID in Streamlit secrets for cloud use.")
+
 
 download_model(file_id, MODEL_PATH)
 
