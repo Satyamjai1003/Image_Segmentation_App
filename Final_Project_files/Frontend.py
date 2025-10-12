@@ -464,7 +464,7 @@ import numpy as np
 import io
 import os
 import random
-
+import gdown 
 # ---------------- Streamlit Page Config ----------------
 st.set_page_config(page_title="Image Segmentation App", layout="wide")
 
@@ -640,31 +640,6 @@ if bg_option == "Preset Backgrounds":
 
 if st.session_state["selected_preset"]:
     preset_bg_file = st.session_state["selected_preset"]
-
-
-
-MODEL_DIR = "model_files"
-MODEL_PATH = os.path.join(MODEL_DIR, "best_model (5).pth")
-
-def download_model(file_id: str, dest: str):
-    os.makedirs(os.path.dirname(dest), exist_ok=True)
-    if not os.path.exists(dest):
-        with st.spinner("Downloading model from Google Drive..."):
-            url = f"https://drive.google.com/uc?id={file_id}"
-            gdown.download(url, dest, quiet=False)
-    else:
-        st.info("Model already downloaded.")
-
-# Get Drive file ID from Streamlit secrets
-# file_id = st.secrets.get("DRIVE_FILE_ID")
-# if not file_id:
-#     st.error("Missing DRIVE_FILE_ID in Streamlit secrets.")
-#     st.stop()
-
-file_id = st.secrets.get("DRIVE_FILE_ID", "1BW7ZpdGILFiDjnvEb0V1S4q7ZBYcwiI8")  # optional fallback
-
-if file_id == "1BW7ZpdGILFiDjnvEb0V1S4q7ZBYcwiI8":
-    st.warning("⚠️ Using default file ID (local test mode). Add DRIVE_FILE_ID in Streamlit secrets for cloud use.")
 
 # ---------------- Load Custom Model ----------------
 @st.cache_resource
