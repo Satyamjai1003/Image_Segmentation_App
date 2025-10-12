@@ -171,9 +171,20 @@ elif bg_option == "Custom Background":
     bg_image_file = st.sidebar.file_uploader("Upload Background Image", type=["png", "jpg","jpeg"])
 
 # ---------------- Preset Backgrounds ----------------
-preset_dir = "Preset_Backgrounds"
+# preset_dir = "Preset_Backgrounds"
 # preset_files = [f for f in os.listdir(preset_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))] if os.path.exists(preset_dir) else []
-preset_files = [f for f in os.listdir(preset_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
+# preset_files = [f for f in os.listdir(preset_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
+
+
+# Find Preset Backgrounds
+preset_dir = "Preset_Backgrounds"
+preset_files = []
+if os.path.exists(preset_dir):
+    preset_files = [f for f in os.listdir(preset_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
+else:
+    st.error(f"Error: The '{preset_dir}' directory was not found. Please ensure it's in your repository.")
+
+
 
 if bg_option == "Preset Backgrounds":
     st.sidebar.write("Select a preset background by clicking a thumbnail:")
