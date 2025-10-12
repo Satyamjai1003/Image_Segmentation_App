@@ -147,11 +147,11 @@ st.markdown("""
 
 # ---------------- Sidebar ----------------
 st.sidebar.title("⚙️ Detection Threshold")
-threshold = st.sidebar.slider("", 0.0, 1.0, 0.5, 0.01)
+threshold = st.sidebar.slider("Threshold", 0.0, 1.0, 0.5, 0.01)
 min_area = st.sidebar.number_input("Minimum Area (pixels)", min_value=0, max_value=1000, value=300, step=10, format="%d")
 
 st.sidebar.title("⚙️ Processing Mode")
-processing_mode = st.sidebar.radio("", ("Single Image", "Batch Processing"), horizontal=True)
+processing_mode = st.sidebar.radio("Processing Mode", ("Single Image", "Batch Processing"), horizontal=True)
 
 st.sidebar.title("💾 Export Format")
 export_format = st.sidebar.selectbox("Select Output Format", ["PNG", "JPG", "JPEG", "WEBP"])
@@ -352,7 +352,7 @@ else:
     uploaded_any = uploaded_files is not None and len(uploaded_files) > 0
 
 # ---------------- Demo Image Section ----------------
-demo_dir = "Demo-Image"
+demo_dir = "../Demo-Image"
 # demo_files = [f for f in os.listdir(demo_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))] if os.path.exists(demo_dir) else []
 demo_files = [f for f in os.listdir(demo_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
 
