@@ -132,7 +132,7 @@ terminado==0.18.1
 tifffile==2025.10.4
 tinycss2==1.4.0
 toml==0.10.2
-torch==2.8.0+cu129
+torch==2.8.0
 torchvision==0.23.0+cu129
 tornado==6.5.2
 tqdm==4.67.1
