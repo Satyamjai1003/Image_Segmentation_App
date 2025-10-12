@@ -17,7 +17,7 @@ st.markdown("""
     <style>
         /* Main app background */
         .stApp {
-            background: linear-gradient(135deg, #B4E50D, #76B900);  
+            background: #000000;  
             color: #FFFFFF;             
         }
         /* Optional: card-style containers for better contrast */
