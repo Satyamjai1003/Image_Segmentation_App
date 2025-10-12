@@ -110,11 +110,19 @@ st.title("🎨 AI-Powered Subject Extraction & Background Editor")
 st.markdown('<div class="center-text">Upload your images, try a demo image, or select presets to instantly extract subjects and apply backgrounds.</div>', unsafe_allow_html=True)
 
 # ---------------- Example Before / After ----------------
-before_image_path = r"C:\Users\ASUS\Downloads\download (33).jpg"
-after_image_path = r"C:\Users\ASUS\Downloads\download (33)_black_bg.jpg"  
+# before_image_path = r"C:\Users\ASUS\Downloads\download (33).jpg"
+# after_image_path = r"C:\Users\ASUS\Downloads\download (33)_black_bg.jpg"  
+
+# example_before = Image.open(before_image_path).convert("RGB") if os.path.exists(before_image_path) else None
+# example_after = Image.open(after_image_path).convert("RGBA") if os.path.exists(after_image_path) else None
+
+
+before_image_path = "download (33).jpg"
+after_image_path = "download (33)_black_bg.jpg"
 
 example_before = Image.open(before_image_path).convert("RGB") if os.path.exists(before_image_path) else None
 example_after = Image.open(after_image_path).convert("RGBA") if os.path.exists(after_image_path) else None
+
 
 if example_before and example_after:
     # st.subheader("📌 Example Before / After")
@@ -163,8 +171,9 @@ elif bg_option == "Custom Background":
     bg_image_file = st.sidebar.file_uploader("Upload Background Image", type=["png", "jpg","jpeg"])
 
 # ---------------- Preset Backgrounds ----------------
-preset_dir = r"C:\Users\ASUS\Downloads\Preset_Backgrounds"
-preset_files = [f for f in os.listdir(preset_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))] if os.path.exists(preset_dir) else []
+preset_dir = "Preset_Backgrounds"
+# preset_files = [f for f in os.listdir(preset_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))] if os.path.exists(preset_dir) else []
+preset_files = [f for f in os.listdir(preset_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
 
 if bg_option == "Preset Backgrounds":
     st.sidebar.write("Select a preset background by clicking a thumbnail:")
@@ -326,8 +335,9 @@ else:
     uploaded_any = uploaded_files is not None and len(uploaded_files) > 0
 
 # ---------------- Demo Image Section ----------------
-demo_dir = r"C:\Users\ASUS\Downloads\Demo-Image"
-demo_files = [f for f in os.listdir(demo_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))] if os.path.exists(demo_dir) else []
+demo_dir = "Demo-Image"
+# demo_files = [f for f in os.listdir(demo_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))] if os.path.exists(demo_dir) else []
+demo_files = [f for f in os.listdir(demo_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
 
 if demo_files:
     st.subheader("🚀 Try Demo Image")
