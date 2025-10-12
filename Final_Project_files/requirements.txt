@@ -1,47 +1,19 @@
-# Streamlit & UI
+numpy==2.2.6
+Pillow==9.5.0
+opencv-python-headless==4.12.0.88
+torch==2.8.0
+torchvision==0.23.0
 streamlit==1.50.0
 streamlit-autorefresh==1.0.1
 streamlit-image-comparison==0.0.4
-rich==14.2.0
-markdown-it-py==4.0.0
-mdurl==0.1.2
-
-# PyTorch & Computer Vision
-torch==2.8.0
-torchvision==0.23.0
 albumentations==2.0.8
 albucore==0.0.24
-opencv-python-headless==4.12.0.88
-pycocotools==2.0.10
 scikit-image==0.25.2
 imageio==2.37.0
-Pillow==9.5.0
-
-# Data & Analysis
-numpy==2.2.6
 pandas==2.3.3
 matplotlib==3.10.6
 scipy==1.16.2
-networkx==3.3
-sympy==1.13.3
-
-# Jupyter/Notebook (if needed)
-jupyter==1.1.1
-notebook==7.4.7
-ipywidgets==8.1.7
-ipykernel==6.30.1
-
-# Utilities
 requests==2.32.5
-pyyaml==6.0.3
-tqdm==4.67.1
-protobuf==6.32.1
-setuptools==70.2.0
-six==1.17.0
-packaging==25.0
-pyparsing==3.2.5
-
-# Optional / Dependency Fixes
-typing_extensions==4.12.2
-attrs==25.3.0
-cffi==2.0.0
+rich==14.2.0
+markdown-it-py==4.0.0
+mdurl==0.1.2
