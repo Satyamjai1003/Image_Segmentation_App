@@ -364,7 +364,6 @@ else:
 #         uploaded_any = False  # to prioritize demo image
 
 
-
 # ---------------- Demo Image Section ----------------
 DEMO_DIR = "Demo-Image"
 DEMO_FOLDER_ID = "1Ibc5YYMM3byWIiKbI3mACzpYbskmgs_L"
