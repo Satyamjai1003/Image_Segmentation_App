@@ -352,16 +352,40 @@ else:
     uploaded_any = uploaded_files is not None and len(uploaded_files) > 0
 
 # ---------------- Demo Image Section ----------------
-demo_dir = "../Demo-Image"
-# demo_files = [f for f in os.listdir(demo_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))] if os.path.exists(demo_dir) else []
-demo_files = [f for f in os.listdir(demo_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
+# demo_dir = "../Demo-Image"
+# # demo_files = [f for f in os.listdir(demo_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))] if os.path.exists(demo_dir) else []
+# demo_files = [f for f in os.listdir(demo_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
+
+# if demo_files:
+#     st.subheader("🚀 Try Demo Image")
+#     if st.button("🎯 Try Demo Image"):
+#         random_demo = random.choice(demo_files)
+#         st.session_state["selected_demo"] = os.path.join(demo_dir, random_demo)
+#         uploaded_any = False  # to prioritize demo image
+
+
+
+# ---------------- Demo Image Section ----------------
+DEMO_DIR = "Demo-Image"
+DEMO_FOLDER_ID = "1Ibc5YYMM3byWIiKbI3mACzpYbskmgs_L"
+
+def download_demo_images():
+    """Downloads the demo image folder from Google Drive."""
+    if not os.path.exists(DEMO_DIR):
+        with st.spinner("Downloading demo images from Google Drive..."):
+            gdown.download_folder(f"https://drive.google.com/drive/folders/{DEMO_FOLDER_ID}", output=DEMO_DIR, quiet=True)
+            st.success("Demo images downloaded successfully!")
+
+download_demo_images()
+
+demo_files = [f for f in os.listdir(DEMO_DIR) if f.lower().endswith((".png", ".jpg", ".jpeg"))] if os.path.exists(DEMO_DIR) else []
 
 if demo_files:
     st.subheader("🚀 Try Demo Image")
     if st.button("🎯 Try Demo Image"):
         random_demo = random.choice(demo_files)
-        st.session_state["selected_demo"] = os.path.join(demo_dir, random_demo)
-        uploaded_any = False  # to prioritize demo image
+        st.session_state["selected_demo"] = os.path.join(DEMO_DIR, random_demo)
+        uploaded_any = False # to prioritize demo image
 
 # ---------------- Display Demo Image ----------------
 if st.session_state.get("selected_demo") and not uploaded_any:
