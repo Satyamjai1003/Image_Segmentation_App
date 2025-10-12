@@ -1,6 +1,11 @@
+# Streamlit for the web app
 streamlit==1.50.0
+
+# PyTorch for model inference
 torch==2.8.0
-torchvision==0.18.0
+torchvision==0.23.0 
+
+# Image processing
 Pillow>=10.1,<12
 scikit-image==0.25.2
 scipy==1.11.1
