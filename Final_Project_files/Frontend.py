@@ -516,8 +516,9 @@ st.markdown("""
 
 # ---------------- FILE DOWNLOAD MAPPING & SETUP ----------------
 
-# IMPORTANT: You must replace the placeholders below with the actual File IDs 
-# and desired filenames from your Google Drive.
+# IMPORTANT: To fix the FileURLRetrievalError, you MUST ensure that 
+# every file corresponding to these IDs has its sharing permission set to 
+# "Anyone with the link".
 
 DOWNLOAD_DIR = "downloaded_assets"
 MODEL_DIR = "model_files"
@@ -525,21 +526,27 @@ MODEL_PATH = os.path.join(MODEL_DIR, "best_model.pth")
 MODEL_FILE_ID = "1BW7ZpdGILFiDjnvEb0V1S4q7ZBYcwiI8" 
 
 # --- Mapping for Example Images ---
-# These are the two individual files you provided links for
 EXAMPLE_FILE_MAPPING = {
+    # 'download (33).jpg' - CHECK PERMISSIONS
     "1qCxGNto7K-JTbyCrRXRp9MlB-0CcuyVn": "download (33).jpg",
+    # 'download (33)_black_bg.jpg' - CHECK PERMISSIONS
     "1LWM2e2cZYo7FqQfebBG6K_bmHuM70fVA": "download (33)_black_bg.jpg",
 }
 EXAMPLE_DIR = DOWNLOAD_DIR
 
 # --- Mapping for Demo Images Folder ---
-# Replace the empty dictionary with your actual file IDs
-DEMO_IMAGE_MAPPING = {}
+# REPLACE THESE PLACEHOLDERS with your actual File IDs and Filenames.
+DEMO_IMAGE_MAPPING = {
+    # Example Placeholder: "File_ID_of_demo1": "demo_image1.jpg",
+    # Example Placeholder: "File_ID_of_demo2": "demo_image2.png",
+}
 DEMO_DIR = os.path.join(DOWNLOAD_DIR, "Demo-Image")
 
 # --- Mapping for Preset Backgrounds Folder ---
-# Replace the empty dictionary with your actual file IDs
-PRESET_BACKGROUND_MAPPING = {}
+# REPLACE THESE PLACEHOLDERS with your actual File IDs and Filenames.
+PRESET_BACKGROUND_MAPPING = {
+    # Example Placeholder: "File_ID_of_preset_bg1": "bg1.jpg",
+}
 PRESET_DIR = os.path.join(DOWNLOAD_DIR, "Preset_Backgrounds")
 
 
@@ -563,15 +570,24 @@ def download_assets():
         for file_id, filename in EXAMPLE_FILE_MAPPING.items():
             dest = os.path.join(EXAMPLE_DIR, filename)
             if not os.path.exists(dest):
-                gdown.download(f"https://drive.google.com/uc?id={file_id}", dest, quiet=True)
-    
+                try:
+                    gdown.download(f"https://drive.google.com/uc?id={file_id}", dest, quiet=True)
+                except Exception as e:
+                    st.error(f"Failed to download {filename} (ID: {file_id}). Ensure permissions are set to 'Anyone with the link'. Error: {e}")
+                    return False
+
     # 3. Download Demo Images
     os.makedirs(DEMO_DIR, exist_ok=True)
     with st.spinner(f"Downloading {len(DEMO_IMAGE_MAPPING)} Demo Images..."):
         for file_id, filename in DEMO_IMAGE_MAPPING.items():
             dest = os.path.join(DEMO_DIR, filename)
             if not os.path.exists(dest):
-                gdown.download(f"https://drive.google.com/uc?id={file_id}", dest, quiet=True)
+                try:
+                    gdown.download(f"https://drive.google.com/uc?id={file_id}", dest, quiet=True)
+                except Exception as e:
+                    st.error(f"Failed to download demo image {filename} (ID: {file_id}). Check permissions.")
+                    return False
+
 
     # 4. Download Preset Backgrounds
     os.makedirs(PRESET_DIR, exist_ok=True)
@@ -579,14 +595,18 @@ def download_assets():
         for file_id, filename in PRESET_BACKGROUND_MAPPING.items():
             dest = os.path.join(PRESET_DIR, filename)
             if not os.path.exists(dest):
-                gdown.download(f"https://drive.google.com/uc?id={file_id}", dest, quiet=True)
+                try:
+                    gdown.download(f"https://drive.google.com/uc?id={file_id}", dest, quiet=True)
+                except Exception as e:
+                    st.error(f"Failed to download preset background {filename} (ID: {file_id}). Check permissions.")
+                    return False
     
     st.success("All assets ready!")
     return True
 
 # Run the download function once on startup
 if not download_assets():
-    st.error("Failed to download critical assets. Please check the file IDs.")
+    st.error("Failed to download critical assets. Please check the file IDs and permissions in the code.")
     st.stop()
 
 
@@ -653,10 +673,9 @@ elif bg_option == "Custom Background":
 # ---------------- Preset Backgrounds Logic ----------------
 preset_files = []
 if os.path.exists(PRESET_DIR):
-    # List files using the consistent downloaded directory
     preset_files = [f for f in os.listdir(PRESET_DIR) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
 else:
-    st.error(f"Error: The preset directory '{PRESET_DIR}' was not found. Please ensure file IDs are correct.")
+    st.error(f"Error: The preset directory '{PRESET_DIR}' was not found after attempted download.")
 
 if bg_option == "Preset Backgrounds":
     st.sidebar.write("Select a preset background by clicking a thumbnail:")
