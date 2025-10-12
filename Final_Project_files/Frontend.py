@@ -7,7 +7,7 @@ import numpy as np
 import io
 import os
 import random
-
+import gdown 
 # ---------------- Streamlit Page Config ----------------
 st.set_page_config(page_title="Image Segmentation App", layout="wide")
 
@@ -184,19 +184,58 @@ if bg_option == "Preset Backgrounds":
 if st.session_state["selected_preset"]:
     preset_bg_file = st.session_state["selected_preset"]
 
+
+# ---------------- Google Drive Model Download (Option-A) ----------------
+MODEL_DIR = "model_files"
+MODEL_PATH = os.path.join(MODEL_DIR, "best_model.pth")
+
+def download_model(file_id: str, dest: str):
+    os.makedirs(os.path.dirname(dest), exist_ok=True)
+    if not os.path.exists(dest):
+        with st.spinner("Downloading model from Google Drive..."):
+            url = f"https://drive.google.com/uc?id={file_id}"
+            gdown.download(url, dest, quiet=False)
+    else:
+        st.info("Model already downloaded.")
+
+# Get Drive file ID from Streamlit secrets
+file_id = st.secrets.get("DRIVE_FILE_ID")
+if not file_id:
+    st.error("Missing DRIVE_FILE_ID in Streamlit secrets.")
+    st.stop()
+
+download_model(file_id, MODEL_PATH)
+
+
+
 # ---------------- Load Custom Model ----------------
+# @st.cache_resource
+# def load_model():
+#     model = models.deeplabv3_resnet50(weights=None)
+#     model.classifier[4] = torch.nn.Conv2d(256, 2, kernel_size=1)
+#     model.aux_classifier = None
+#     checkpoint = torch.load(r"C:\Users\ASUS\Downloads\best_model (5).pth", map_location=torch.device("cpu"))
+#     state_dict = {k: v for k, v in checkpoint.items() if k in model.state_dict()}
+#     model.load_state_dict(state_dict, strict=False)
+#     model.eval()
+#     return model
+
+# model = load_model()
+
+
 @st.cache_resource
 def load_model():
     model = models.deeplabv3_resnet50(weights=None)
     model.classifier[4] = torch.nn.Conv2d(256, 2, kernel_size=1)
     model.aux_classifier = None
-    checkpoint = torch.load(r"C:\Users\ASUS\Downloads\best_model (5).pth", map_location=torch.device("cpu"))
+    checkpoint = torch.load(MODEL_PATH, map_location=torch.device("cpu"))
     state_dict = {k: v for k, v in checkpoint.items() if k in model.state_dict()}
     model.load_state_dict(state_dict, strict=False)
     model.eval()
     return model
 
 model = load_model()
+
 
 # ---------------- Preprocessing ----------------
 def preprocess(image):
