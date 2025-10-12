@@ -117,8 +117,13 @@ st.markdown('<div class="center-text">Upload your images, try a demo image, or s
 # example_after = Image.open(after_image_path).convert("RGBA") if os.path.exists(after_image_path) else None
 
 
-before_image_path = "download (33).jpg"
-after_image_path = "download (33)_black_bg.jpg"
+# before_image_path = "download (33).jpg"
+# after_image_path = "download (33)_black_bg.jpg"
+
+# Assuming your files are at: /content/drive/MyDrive/Image_Segmentation_App/Final_Project_files/
+BASE_PATH = "/content/drive/MyDrive/Image_Segmentation_App/Final_Project_files/"
+before_image_path = os.path.join(BASE_PATH, "download (33).jpg")
+after_image_path = os.path.join(BASE_PATH, "download (33)_black_bg.jpg")
 
 example_before = Image.open(before_image_path).convert("RGB") if os.path.exists(before_image_path) else None
 example_after = Image.open(after_image_path).convert("RGBA") if os.path.exists(after_image_path) else None
@@ -176,15 +181,44 @@ elif bg_option == "Custom Background":
 # preset_files = [f for f in os.listdir(preset_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
 
 
-# Find Preset Backgrounds
-preset_dir = "Preset_Backgrounds"
+# # Find Preset Backgrounds
+# preset_dir = "Preset_Backgrounds"
+# preset_files = []
+# if os.path.exists(preset_dir):
+#     preset_files = [f for f in os.listdir(preset_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
+# else:
+#     st.error(f"Error: The '{preset_dir}' directory was not found. Please ensure it's in your repository.")
+
+
+
+# if bg_option == "Preset Backgrounds":
+#     st.sidebar.write("Select a preset background by clicking a thumbnail:")
+#     if preset_files:
+#         cols = st.sidebar.columns(3)
+#         for idx, file_name in enumerate(preset_files):
+#             img_path = os.path.join(preset_dir, file_name)
+#             try:
+#                 thumb = Image.open(img_path).convert("RGBA").resize((80, 80))
+#             except:
+#                 continue
+#             col = cols[idx % 3]
+#             if col.button("", key=f"preset_btn_{idx}"):
+#                 st.session_state["selected_preset"] = img_path
+#             col.image(thumb, use_column_width=True)
+
+# if st.session_state["selected_preset"]:
+#     preset_bg_file = st.session_state["selected_preset"]
+
+
+
+
+# Updated path to point to Google Drive
+preset_dir = os.path.join(BASE_PATH, "Preset_Backgrounds")
 preset_files = []
 if os.path.exists(preset_dir):
     preset_files = [f for f in os.listdir(preset_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
 else:
-    st.error(f"Error: The '{preset_dir}' directory was not found. Please ensure it's in your repository.")
-
-
+    st.error(f"Error: The '{preset_dir}' directory was not found. Please ensure it's in your Google Drive.")
 
 if bg_option == "Preset Backgrounds":
     st.sidebar.write("Select a preset background by clicking a thumbnail:")
@@ -352,9 +386,25 @@ else:
     uploaded_any = uploaded_files is not None and len(uploaded_files) > 0
 
 # ---------------- Demo Image Section ----------------
-demo_dir = "../Demo-Image"
-# demo_files = [f for f in os.listdir(demo_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))] if os.path.exists(demo_dir) else []
-demo_files = [f for f in os.listdir(demo_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
+# demo_dir = "../Demo-Image"
+# # demo_files = [f for f in os.listdir(demo_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))] if os.path.exists(demo_dir) else []
+# demo_files = [f for f in os.listdir(demo_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
+
+# if demo_files:
+#     st.subheader("🚀 Try Demo Image")
+#     if st.button("🎯 Try Demo Image"):
+#         random_demo = random.choice(demo_files)
+#         st.session_state["selected_demo"] = os.path.join(demo_dir, random_demo)
+#         uploaded_any = False  # to prioritize demo image
+
+
+# Updated path to point to Google Drive
+demo_dir = os.path.join(BASE_PATH, "Demo-Image")
+demo_files = []
+if os.path.exists(demo_dir):
+    demo_files = [f for f in os.listdir(demo_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
+else:
+    st.error(f"Error: The '{demo_dir}' directory was not found. Please ensure it's in your Google Drive.")
 
 if demo_files:
     st.subheader("🚀 Try Demo Image")
