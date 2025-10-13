@@ -1445,7 +1445,8 @@ st.markdown("""
         .stApp {
             # background: #000000;  /* Solid black background */
             background-color: linear-gradient(135deg, #B4E50D, #76B900);
-            color: #FFFFFF;
+            # color: #FFFFFF;
+            color: #000000;
         }
         /* Optional: card-style containers for better contrast */
         .stContainer {
@@ -1459,7 +1460,8 @@ st.markdown("""
         /* Sidebar Styling */
         # [data-testid="stSidebar"] {
         #     background-color: #FFFD8F;  /* Dark sidebar */
-        #     color: #ffffff;
+            color: #ffffff;
+        #     color: #000000;
         #     padding: 10px;
         # }
         # [data-testid="stSidebar"] * {
@@ -1469,7 +1471,8 @@ st.markdown("""
         /* Sidebar Styling */
         [data-testid="stSidebar"] {
             background-color: #FFFD8F;  /* Dark sidebar */
-            color: #ffffff;
+            # color: #ffffff;
+            color: #000000;
             padding: 10px;
         }
         # [data-testid="stSidebar"] * {
@@ -1527,7 +1530,8 @@ st.markdown("""
             transition: all 0.3s ease;
         }
         .footer a:hover {
-            color: #ffffff;
+            # color: #ffffff;
+            color: #000000;
             text-shadow: 0 0 5px #4CAF50;
             transform: scale(1.05);
         }
