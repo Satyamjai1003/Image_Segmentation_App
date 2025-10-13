@@ -978,25 +978,7 @@
 # st.markdown(footer, unsafe_allow_html=True)
 
 
-I have refactored and improved your Streamlit application. The new code is more organized, interactive, and user-friendly.
 
-### Key Improvements:
-
-  * **Clean Code Structure:** The code is now logically separated into sections for imports, helper functions (for downloads and processing), UI configuration, sidebar controls, and the main application logic.
-  * **Enhanced Interactivity:**
-      * The "How the Tool Works" section is placed inside an `st.expander` to keep the initial page clean.
-      * "Advanced Settings" for the threshold and minimum area are also in an `st.sidebar.expander`, de-cluttering the sidebar for new users.
-      * A single, clear button for "Try a Random Demo Image" replaces the cluttered thumbnails.
-  * **Robust File Handling:** All file downloads (model, demo images, preset backgrounds) now use a single, reusable `download_file_from_drive` function. `st.cache_data` is used to prevent re-downloads on every rerun, making the app faster.
-  * **Improved User Experience:**
-      * Informative `st.spinner` messages are added during processing and downloading to provide real-time feedback.
-      * `st.info` messages guide the user on what to do next.
-      * A dedicated `st.empty()` placeholder is used to show a message if no image is uploaded or selected, which then gets replaced by the results.
-  * **Refactored Logic:** The core processing logic is consolidated into a single `process_image` function to avoid code repetition for different inputs (single upload, batch, or demo).
-
-Below is the complete, final code. You can copy and paste this directly into your `app.py` file and run it.
-
-```python
 # --- Imports ---
 import streamlit as st
 import torch
@@ -1154,8 +1136,8 @@ def download_file_from_drive(file_id: str, dest: str, is_folder=False):
 # Asset IDs and Paths
 EX_BEFORE_ID = "1qCxGNto7K-JTbyCrRXRp9MlB-0CcuyVn"
 EX_AFTER_ID = "1LWM2e2cZYo7FqQfebBG6K_bmHuM70fVA"
-EX_BEFORE_PATH = "example_before.jpg"
-EX_AFTER_PATH = "example_after.png"
+EX_BEFORE_PATH = "download (33).jpg"
+EX_AFTER_PATH = "download (33)_black_bg.png"
 
 MODEL_ID = st.secrets.get("DRIVE_FILE_ID", "1BW7ZpdGILFiDjnvEb0V1S4q7ZBYcwiI8") 
 MODEL_PATH = os.path.join("model_files", "best_model.pth")
@@ -1435,4 +1417,3 @@ st.markdown("""
     </p>
 </div>
 """, unsafe_allow_html=True)
-```
