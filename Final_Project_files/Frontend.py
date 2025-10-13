@@ -1466,7 +1466,7 @@ st.markdown("""
         # }
         # [data-testid="stSidebar"] * {
         #     # color: black !important;
-        #     color: white !important;
+        #     color: black !important;
         # }
         /* Sidebar Styling */
         [data-testid="stSidebar"] {
@@ -1476,7 +1476,7 @@ st.markdown("""
             padding: 10px;
         }
         # [data-testid="stSidebar"] * {
-        #     color: white !important;
+        #     color: black !important;
         # }   
         /* Main Page Background */
         .css-18e3th9 {  /* Streamlit main content container */
@@ -1487,7 +1487,7 @@ st.markdown("""
         /* Buttons, text, etc. */
         .try-demo-btn {
             background-color: #4CAF50;
-            color: white;
+            color: black;
             font-weight: bold;
             padding: 0.5rem 1rem;
             border-radius: 8px;
