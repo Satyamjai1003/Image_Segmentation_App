@@ -1314,7 +1314,7 @@ elif bg_option == "Preset Backgrounds":
             except Exception:
                 continue
             col = cols[idx % 3]
-            if col.button("", key=f"preset_btn_{idx}", help=file_name):
+            if col.button("Processing Mode", key=f"preset_btn_{idx}", help=file_name):
                 st.session_state["selected_preset"] = img_path
                 st.session_state["selected_demo"] = None # Clear demo selection
             col.image(thumb, use_column_width=True, caption=file_name)
