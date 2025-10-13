@@ -365,12 +365,34 @@ else:
 
 
 # ---------------- Demo Image Section ----------------
+# DEMO_DIR = "Demo-Image"
+# DEMO_FOLDER_ID = "1Ibc5YYMM3byWIiKbI3mACzpYbskmgs_L"
+
+# def download_demo_images():
+#     """Downloads the demo image folder from Google Drive."""
+#     if not os.path.exists(DEMO_DIR):
+#         with st.spinner("Downloading demo images from Google Drive..."):
+#             gdown.download_folder(f"https://drive.google.com/drive/folders/{DEMO_FOLDER_ID}", output=DEMO_DIR, quiet=True)
+#             st.success("Demo images downloaded successfully!")
+
+# download_demo_images()
+
+# demo_files = [f for f in os.listdir(DEMO_DIR) if f.lower().endswith((".png", ".jpg", ".jpeg"))] if os.path.exists(DEMO_DIR) else []
+
+# if demo_files:
+#     st.subheader("🚀 Try Demo Image")
+#     if st.button("🎯 Try Demo Image"):
+#         random_demo = random.choice(demo_files)
+#         st.session_state["selected_demo"] = os.path.join(DEMO_DIR, random_demo)
+#         uploaded_any = False # to prioritize demo image
+
+
 DEMO_DIR = "Demo-Image"
 DEMO_FOLDER_ID = "1Ibc5YYMM3byWIiKbI3mACzpYbskmgs_L"
 
 def download_demo_images():
-    """Downloads the demo image folder from Google Drive."""
-    if not os.path.exists(DEMO_DIR):
+    """Downloads the demo image folder from Google Drive if not present."""
+    if not os.path.exists(DEMO_DIR) or not any(f.lower().endswith((".png", ".jpg", ".jpeg")) for f in os.listdir(DEMO_DIR)):
         with st.spinner("Downloading demo images from Google Drive..."):
             gdown.download_folder(f"https://drive.google.com/drive/folders/{DEMO_FOLDER_ID}", output=DEMO_DIR, quiet=True)
             st.success("Demo images downloaded successfully!")
@@ -381,10 +403,24 @@ demo_files = [f for f in os.listdir(DEMO_DIR) if f.lower().endswith((".png", ".j
 
 if demo_files:
     st.subheader("🚀 Try Demo Image")
-    if st.button("🎯 Try Demo Image"):
+    demo_thumbnails = []
+    cols = st.columns(min(4, len(demo_files)))
+    for idx, file_name in enumerate(demo_files):
+        img_path = os.path.join(DEMO_DIR, file_name)
+        try:
+            thumb = Image.open(img_path).convert("RGBA").resize((80, 80))
+        except:
+            continue
+        col = cols[idx % len(cols)]
+        if col.button("", key=f"demo_btn_{idx}"):
+            st.session_state["selected_demo"] = img_path
+            uploaded_any = False
+        col.image(thumb, use_column_width=True)
+    st.write("Or click below for a random demo image:")
+    if st.button("🎯 Try Random Demo Image"):
         random_demo = random.choice(demo_files)
         st.session_state["selected_demo"] = os.path.join(DEMO_DIR, random_demo)
-        uploaded_any = False # to prioritize demo image
+        uploaded_any = False
 
 # ---------------- Display Demo Image ----------------
 if st.session_state.get("selected_demo") and not uploaded_any:
