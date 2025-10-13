@@ -552,7 +552,7 @@ st.markdown("""
             transition: 0.3s;
         }
         .try-demo-btn:hover {
-            background-color: #45a049;
+            background-color: #000000;
             cursor: pointer;
             transform: scale(1.05);
         }
