@@ -893,19 +893,19 @@ demo_files = [f for f in os.listdir(DEMO_DIR) if f.lower().endswith((".png", ".j
 if demo_files:
     st.markdown("---")
     st.subheader("🚀 Try Demo Image")
-    st.write("Click a thumbnail to select a demo image, or use the random button below.")
-    cols = st.columns(min(4, len(demo_files)))
-    for idx, file_name in enumerate(demo_files):
-        img_path = os.path.join(DEMO_DIR, file_name)
-        try:
-            thumb = Image.open(img_path).convert("RGBA").resize((80, 80))
-        except Exception:
-            continue
-        col = cols[idx % len(cols)]
-        if col.button("", key=f"demo_btn_{idx}", help=file_name):
-            st.session_state["selected_demo"] = img_path
-            uploaded_any = False
-        col.image(thumb, use_column_width=True, caption=file_name)
+    # st.write("Click a thumbnail to select a demo image, or use the random button below.")
+    # cols = st.columns(min(4, len(demo_files)))
+    # for idx, file_name in enumerate(demo_files):
+    #     img_path = os.path.join(DEMO_DIR, file_name)
+    #     try:
+    #         thumb = Image.open(img_path).convert("RGBA").resize((80, 80))
+    #     except Exception:
+    #         continue
+    #     col = cols[idx % len(cols)]
+    #     if col.button("", key=f"demo_btn_{idx}", help=file_name):
+    #         st.session_state["selected_demo"] = img_path
+    #         uploaded_any = False
+    #     col.image(thumb, use_column_width=True, caption=file_name)
     if st.button("🎯 Try Random Demo Image"):
         random_demo = random.choice(demo_files)
         st.session_state["selected_demo"] = os.path.join(DEMO_DIR, random_demo)
